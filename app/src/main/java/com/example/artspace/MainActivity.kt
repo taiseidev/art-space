@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
@@ -16,6 +17,8 @@ import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.Button
+import androidx.compose.material3.ButtonDefaults
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
@@ -58,6 +61,8 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
         ImageSection(modifier = modifier)
         Spacer(modifier = modifier.height(80.dp))
         ArtTitleSection()
+        Spacer(modifier = modifier.height(40.dp))
+        ButtonSection()
     }
 }
 
@@ -101,6 +106,31 @@ fun ArtTitleSection(modifier: Modifier = Modifier) {
                 }
             }, fontSize = 12.sp, fontWeight = FontWeight.Bold)
         }
+    }
+}
+
+@Composable
+fun ButtonSection(modifier: Modifier = Modifier) {
+    Row(
+        modifier = modifier
+            .fillMaxWidth()
+            .padding(24.dp)
+    ) {
+        CustomButton(text = "Previous", onClick = {})
+        Spacer(modifier = modifier.weight(1f))
+        CustomButton(text = "Next", onClick = {})
+    }
+}
+
+@Composable
+fun CustomButton(modifier: Modifier = Modifier, text: String, onClick: () -> Unit) {
+    var customColor = Color(0xff495d92)
+    Button(
+        colors = ButtonDefaults.buttonColors(containerColor = customColor),
+        onClick = onClick,
+        modifier = modifier.size(150.dp, 40.dp)
+    ) {
+        Text(text, color = Color.White)
     }
 }
 
