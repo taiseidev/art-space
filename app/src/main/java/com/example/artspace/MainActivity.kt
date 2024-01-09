@@ -9,6 +9,7 @@ import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
@@ -24,8 +25,13 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.text.SpanStyle
+import androidx.compose.ui.text.buildAnnotatedString
+import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.text.withStyle
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.compose.ui.unit.sp
 import com.example.artspace.ui.theme.ArtSpaceTheme
 
 class MainActivity : ComponentActivity() {
@@ -47,10 +53,11 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ArtSpaceLayout(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center
+        modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Center
     ) {
         ImageSection(modifier = modifier)
+        Spacer(modifier = modifier.height(80.dp))
+        ArtTitleSection()
     }
 }
 
@@ -62,14 +69,38 @@ fun ImageSection(modifier: Modifier = Modifier) {
             .height(500.dp)
             .padding(horizontal = 16.dp)
             .shadow(elevation = 4.dp)
-            .background(Color.White),
-        contentAlignment = Alignment.Center
+            .background(Color.White), contentAlignment = Alignment.Center
     ) {
         Image(
             painter = painterResource(id = R.drawable.image),
             contentDescription = null,
             modifier = modifier.padding(vertical = 32.dp)
         )
+    }
+}
+
+@Composable
+fun ArtTitleSection(modifier: Modifier = Modifier) {
+    Box(
+        modifier = modifier
+            .fillMaxWidth()
+            .height(100.dp)
+            .padding(horizontal = 16.dp)
+            .background(Color.LightGray), contentAlignment = Alignment.Center
+    ) {
+        Column(
+            modifier = modifier.padding(23.dp)
+        ) {
+            Text(text = "ここにアートのタイトルを挿入します。", fontSize = 16.sp)
+            Text(text = buildAnnotatedString {
+                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append("作者名")
+                }
+                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                    append("（2021）")
+                }
+            }, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+        }
     }
 }
 
