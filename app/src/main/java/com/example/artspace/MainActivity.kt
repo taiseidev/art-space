@@ -24,6 +24,10 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableStateOf
+import androidx.compose.runtime.remember
+import androidx.compose.runtime.setValue
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.shadow
@@ -54,8 +58,20 @@ class MainActivity : ComponentActivity() {
     }
 }
 
+// Artオブジェクトのリストを作成
+val artList = listOf(
+    Art(R.drawable.art_1, "赤、青、白の花", "Europeana", "2020"),
+    Art(R.drawable.art_2, "黒と黄色の抽象画", "Victor Grabarczyk", "2019"),
+    Art(R.drawable.art_3, "紫と白の抽象画のクローズアップ", "Maria Orlova ", "2019"),
+    Art(R.drawable.art_4, "建物の天井に描かれた絵", "adrianna geo", "2019"),
+    Art(R.drawable.art_5, "色とりどりの抽象画", "Joel Filipe", "2017")
+)
+
 @Composable
 fun ArtSpaceLayout(modifier: Modifier = Modifier) {
+
+    var artIndex by remember { mutableStateOf(1) }
+    val currentArt = artList[artIndex]
     Column(
         modifier = modifier
             .fillMaxSize()
@@ -63,7 +79,7 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
         verticalArrangement = Arrangement.Center
     ) {
         Spacer(modifier = modifier.height(80.dp))
-        ImageSection(modifier = modifier)
+        ImageSection(image = currentArt.imageUrl, modifier = modifier)
         Spacer(modifier = modifier.height(60.dp))
         ArtTitleSection()
         Spacer(modifier = modifier.height(10.dp))
@@ -72,7 +88,7 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ImageSection(modifier: Modifier = Modifier) {
+fun ImageSection(image: Int, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -81,7 +97,7 @@ fun ImageSection(modifier: Modifier = Modifier) {
             .background(Color.White), contentAlignment = Alignment.Center
     ) {
         Image(
-            painter = painterResource(id = R.drawable.image),
+            painter = painterResource(id = image),
             contentDescription = null,
             modifier = modifier.padding(vertical = 32.dp)
         )
@@ -136,8 +152,8 @@ fun CustomButton(modifier: Modifier = Modifier, text: String, onClick: () -> Uni
     }
 }
 
-private class Art(
-    @DrawableRes var imageUrl: Int,
+data class Art(
+    var imageUrl: Int,
     var title: String,
     var creator: String,
     var year: String,
