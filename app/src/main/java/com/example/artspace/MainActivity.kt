@@ -56,12 +56,16 @@ class MainActivity : ComponentActivity() {
 @Composable
 fun ArtSpaceLayout(modifier: Modifier = Modifier) {
     Column(
-        modifier = modifier.fillMaxSize(), verticalArrangement = Arrangement.Center
+        modifier = modifier
+            .fillMaxSize()
+            .padding(horizontal = 16.dp),
+        verticalArrangement = Arrangement.Center
     ) {
-        ImageSection(modifier = modifier)
         Spacer(modifier = modifier.height(80.dp))
+        ImageSection(modifier = modifier)
+        Spacer(modifier = modifier.height(60.dp))
         ArtTitleSection()
-        Spacer(modifier = modifier.height(40.dp))
+        Spacer(modifier = modifier.height(10.dp))
         ButtonSection()
     }
 }
@@ -72,7 +76,6 @@ fun ImageSection(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .height(500.dp)
-            .padding(horizontal = 16.dp)
             .shadow(elevation = 4.dp)
             .background(Color.White), contentAlignment = Alignment.Center
     ) {
@@ -90,21 +93,19 @@ fun ArtTitleSection(modifier: Modifier = Modifier) {
         modifier = modifier
             .fillMaxWidth()
             .height(100.dp)
-            .padding(horizontal = 16.dp)
-            .background(Color.LightGray), contentAlignment = Alignment.Center
+            .background(Color(0xffedeaf4)),
+        contentAlignment = Alignment.Center
     ) {
         Column(
             modifier = modifier.padding(23.dp)
         ) {
-            Text(text = "ここにアートのタイトルを挿入します。", fontSize = 16.sp)
+            Text(text = "ここにアートのタイトルを挿入します。", fontSize = 16.sp, color = Color(0xff86878d))
             Text(text = buildAnnotatedString {
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
+                withStyle(style = SpanStyle(color = Color(0xff151419))) {
                     append("作者名")
                 }
-                withStyle(style = SpanStyle(fontWeight = FontWeight.Bold)) {
-                    append("（2021）")
-                }
-            }, fontSize = 12.sp, fontWeight = FontWeight.Bold)
+                append("（2021）")
+            }, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color(0xff86878d))
         }
     }
 }
