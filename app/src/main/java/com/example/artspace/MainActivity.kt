@@ -88,11 +88,11 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
                 if (artIndex == 0) {
                     artIndex = 4
                 } else {
-                    artIndex -= 1
+                    artIndex = artList.size - 1
                 }
             },
             onNextClick = {
-                if (artIndex == 4) {
+                if (artIndex < artList.size - 1) {
                     artIndex = 0
                 } else {
                     artIndex += 1
