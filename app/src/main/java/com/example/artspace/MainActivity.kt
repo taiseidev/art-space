@@ -70,7 +70,7 @@ val artList = listOf(
 @Composable
 fun ArtSpaceLayout(modifier: Modifier = Modifier) {
 
-    var artIndex by remember { mutableStateOf(1) }
+    var artIndex by remember { mutableStateOf(0) }
     val currentArt = artList[artIndex]
     Column(
         modifier = modifier
@@ -81,9 +81,24 @@ fun ArtSpaceLayout(modifier: Modifier = Modifier) {
         Spacer(modifier = modifier.height(80.dp))
         ImageSection(image = currentArt.imageUrl, modifier = modifier)
         Spacer(modifier = modifier.height(60.dp))
-        ArtTitleSection()
+        ArtTitleSection(art = currentArt)
         Spacer(modifier = modifier.height(10.dp))
-        ButtonSection()
+        ButtonSection(
+            onPreviousClick = {
+                if (artIndex == 0) {
+                    artIndex = 4
+                } else {
+                    artIndex -= 1
+                }
+            },
+            onNextClick = {
+                if (artIndex == 4) {
+                    artIndex = 0
+                } else {
+                    artIndex += 1
+                }
+            },
+        )
     }
 }
 
@@ -105,7 +120,7 @@ fun ImageSection(image: Int, modifier: Modifier = Modifier) {
 }
 
 @Composable
-fun ArtTitleSection(modifier: Modifier = Modifier) {
+fun ArtTitleSection(art: Art, modifier: Modifier = Modifier) {
     Box(
         modifier = modifier
             .fillMaxWidth()
@@ -116,27 +131,29 @@ fun ArtTitleSection(modifier: Modifier = Modifier) {
         Column(
             modifier = modifier.padding(23.dp)
         ) {
-            Text(text = "ここにアートのタイトルを挿入します。", fontSize = 16.sp, color = Color(0xff86878d))
+            Text(text = art.title, fontSize = 16.sp, color = Color(0xff86878d))
             Text(text = buildAnnotatedString {
                 withStyle(style = SpanStyle(color = Color(0xff151419))) {
-                    append("作者名")
+                    append(art.creator)
                 }
-                append("（2021）")
+                append("（${art.year}）")
             }, fontSize = 12.sp, fontWeight = FontWeight.Bold, color = Color(0xff86878d))
         }
     }
 }
 
 @Composable
-fun ButtonSection(modifier: Modifier = Modifier) {
+fun ButtonSection(
+    onPreviousClick: () -> Unit, onNextClick: () -> Unit, modifier: Modifier = Modifier
+) {
     Row(
         modifier = modifier
             .fillMaxWidth()
             .padding(24.dp)
     ) {
-        CustomButton(text = "Previous", onClick = {})
+        CustomButton(text = "Previous", onClick = onPreviousClick)
         Spacer(modifier = modifier.weight(1f))
-        CustomButton(text = "Next", onClick = {})
+        CustomButton(text = "Next", onClick = onNextClick)
     }
 }
 
