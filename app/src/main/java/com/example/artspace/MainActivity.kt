@@ -4,6 +4,7 @@ import android.graphics.Paint
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
+import androidx.annotation.DrawableRes
 import androidx.compose.foundation.Image
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
@@ -134,6 +135,14 @@ fun CustomButton(modifier: Modifier = Modifier, text: String, onClick: () -> Uni
         Text(text, color = Color.White)
     }
 }
+
+private class Art(
+    @DrawableRes var imageUrl: Int,
+    var title: String,
+    var creator: String,
+    var year: String,
+)
+
 
 @Preview(showBackground = true)
 @Composable
